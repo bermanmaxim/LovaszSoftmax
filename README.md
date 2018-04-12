@@ -4,7 +4,7 @@ Maxim Berman, Amal Rannen Triki, Matthew B. Blaschko
 
 ESAT-PSI, KU Leuven, belgium.
 
-To appear in CVPR 2018. See [project page](http://localhost:8000/LovaszSoftmax.html) and [arxiv paper](https://arxiv.org/abs/1705.08790).
+To appear in CVPR 2018. See [project page](http://bmax.im/LovaszSoftmax) and [arxiv paper](https://arxiv.org/abs/1705.08790).
 
 Files included:
 * **lovasz_losses.py**: PyTorch implementation of the Lovász hinge and Lovász-Softmax for the Jaccard index
