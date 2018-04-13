@@ -2,7 +2,7 @@
 
 Maxim Berman, Amal Rannen Triki, Matthew B. Blaschko
 
-ESAT-PSI, KU Leuven, belgium.
+ESAT-PSI, KU Leuven, Belgium.
 
 To appear in CVPR 2018. See [project page](http://bmax.im/LovaszSoftmax) and [arxiv paper](https://arxiv.org/abs/1705.08790).
 
@@ -18,6 +18,4 @@ The binary `lovasz_hinge` expects real-valued scores (positive scores correspond
 The multiclass `lovasz_softmax` expect class probabilities (the maximum scoring category is predicted). First use a `Softmax` layer on the unnormalized scores.
 
 ## Experiments
-To be added later.
-
-
+To be added later. See the demos for simple proofs of principle.
