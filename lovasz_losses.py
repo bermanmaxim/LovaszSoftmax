@@ -113,7 +113,6 @@ def flatten_binary_scores(scores, labels, ignore=None):
     Flattens predictions in the batch (binary case)
     Remove labels equal to 'ignore'
     """
-    B, H, W = scores.size()
     scores = scores.view(-1)
     labels = labels.view(-1)
     if ignore is None:
@@ -158,7 +157,7 @@ def lovasz_softmax(probas, labels, only_present=False, per_image=False, ignore=N
       ignore: void class labels
     """
     if per_image:
-        loss = utils.mean(lovasz_softmax_flat(*flatten_probas(prob, lab, ignore), only_present=only_present)
+        loss = utils.mean(lovasz_softmax_flat(*flatten_probas(prob.unsqueeze(0), lab.unsqueeze(0), ignore), only_present=only_present)
                           for prob, lab in zip(probas, labels))
     else:
         loss = lovasz_softmax_flat(*flatten_probas(probas, labels, ignore), only_present=only_present)
@@ -186,19 +185,19 @@ def lovasz_softmax_flat(probas, labels, only_present=False):
     return utils.mean(losses)
 
 
-def flatten_probas(scores, labels, ignore=None):
+def flatten_probas(probas, labels, ignore=None):
     """
     Flattens predictions in the batch
     """
-    B, C, H, W = scores.size()
-    scores = scores.permute(0, 2, 3, 1).contiguous().view(-1, C)  # B * H * W, C = P, C
+    B, C, H, W = probas.size()
+    probas = probas.permute(0, 2, 3, 1).contiguous().view(-1, C)  # B * H * W, C = P, C
     labels = labels.view(-1)
     if ignore is None:
-        return scores, labels
+        return probas, labels
     valid = (labels != ignore)
-    vscores = scores[valid.nonzero().squeeze()]
+    vprobas = probas[valid.nonzero().squeeze()]
     vlabels = labels[valid]
-    return vscores, vlabels
+    return vprobas, vlabels
 
 def xloss(logits, labels, ignore=None):
     """

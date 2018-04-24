@@ -7,6 +7,7 @@ from __future__ import print_function, division
 from itertools import  ifilterfalse
 import numpy as np
 from PIL import Image, ImageDraw
+import contextlib
 
 
 def mean(l, ignore_nan=False, empty=0):
@@ -84,3 +85,13 @@ def dummy_triangles(w, categories=[0, 255, 1]):
     for c in categories[1:]:
         draw.polygon(map(tuple, np.random.randint(w, size=(3, 2))), fill=c, outline=None)
     return im
+
+# https://stackoverflow.com/questions/2891790/how-to-pretty-printing-a-numpy-array-without-scientific-notation-and-with-given
+@contextlib.contextmanager
+def printoptions(*args, **kwargs):
+    original = np.get_printoptions()
+    np.set_printoptions(*args, **kwargs)
+    try:
+        yield
+    finally:
+        np.set_printoptions(**original)
