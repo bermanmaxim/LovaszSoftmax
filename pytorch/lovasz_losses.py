@@ -8,8 +8,8 @@ from __future__ import print_function, division
 import torch
 from torch.autograd import Variable
 import torch.nn.functional as F
-import utils
 import numpy as np
+from itertools import  ifilterfalse
 
 
 def lovasz_grad(gt_sorted):
@@ -43,7 +43,7 @@ def iou_binary(preds, labels, EMPTY=1., ignore=None, per_image=True):
         else:
             iou = float(intersection) / union
         ious.append(iou)
-    iou = utils.mean(ious)    # mean accross images if per_image
+    iou = mean(ious)    # mean accross images if per_image
     return 100 * iou
 
 
@@ -65,7 +65,7 @@ def iou(preds, labels, C, EMPTY=1., ignore=None, per_image=False):
                 else:
                     iou.append(float(intersection) / union)
         ious.append(iou)
-    ious = map(utils.mean, zip(*ious)) # mean accross images if per_image
+    ious = map(mean, zip(*ious)) # mean accross images if per_image
     return 100 * np.array(ious)
 
 
@@ -81,7 +81,7 @@ def lovasz_hinge(logits, labels, per_image=True, ignore=None):
       ignore: void class id
     """
     if per_image:
-        loss = utils.mean(lovasz_hinge_flat(*flatten_binary_scores(log.unsqueeze(0), lab.unsqueeze(0), ignore))
+        loss = mean(lovasz_hinge_flat(*flatten_binary_scores(log.unsqueeze(0), lab.unsqueeze(0), ignore))
                           for log, lab in zip(logits, labels))
     else:
         loss = lovasz_hinge_flat(*flatten_binary_scores(logits, labels, ignore))
@@ -157,7 +157,7 @@ def lovasz_softmax(probas, labels, only_present=False, per_image=False, ignore=N
       ignore: void class labels
     """
     if per_image:
-        loss = utils.mean(lovasz_softmax_flat(*flatten_probas(prob.unsqueeze(0), lab.unsqueeze(0), ignore), only_present=only_present)
+        loss = mean(lovasz_softmax_flat(*flatten_probas(prob.unsqueeze(0), lab.unsqueeze(0), ignore), only_present=only_present)
                           for prob, lab in zip(probas, labels))
     else:
         loss = lovasz_softmax_flat(*flatten_probas(probas, labels, ignore), only_present=only_present)
@@ -182,7 +182,7 @@ def lovasz_softmax_flat(probas, labels, only_present=False):
         perm = perm.data
         fg_sorted = fg[perm]
         losses.append(torch.dot(errors_sorted, Variable(lovasz_grad(fg_sorted))))
-    return utils.mean(losses)
+    return mean(losses)
 
 
 def flatten_probas(probas, labels, ignore=None):
@@ -204,3 +204,26 @@ def xloss(logits, labels, ignore=None):
     Cross entropy loss
     """
     return F.cross_entropy(logits, Variable(labels), ignore_index=255)
+
+
+# --------------------------- HELPER FUNCTIONS ---------------------------
+
+def mean(l, ignore_nan=False, empty=0):
+    """
+    nanmean compatible with generators.
+    """
+    l = iter(l)
+    if ignore_nan:
+        l = ifilterfalse(np.isnan, l)
+    try:
+        n = 1
+        acc = next(l)
+    except StopIteration:
+        if empty == 'raise':
+            raise ValueError('Empty mean')
+        return empty
+    for n, v in enumerate(l, 2):
+        acc += v
+    if n == 1:
+        return acc
+    return acc / n

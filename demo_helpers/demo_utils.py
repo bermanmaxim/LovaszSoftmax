@@ -1,5 +1,5 @@
 """
-Python utils
+Some utils used in all demos
 Maxim Berman 2018 ESAT-PSI KU Leuven (MIT License)
 """
 
@@ -8,27 +8,6 @@ from itertools import  ifilterfalse
 import numpy as np
 from PIL import Image, ImageDraw
 import contextlib
-
-
-def mean(l, ignore_nan=False, empty=0):
-    """
-    nanmean compatible with generators.
-    """
-    l = iter(l)
-    if ignore_nan:
-        l = ifilterfalse(np.isnan, l)
-    try:
-        n = 1
-        acc = next(l)
-    except StopIteration:
-        if empty == 'raise':
-            raise ValueError('Empty mean')
-        return empty
-    for n, v in enumerate(l, 2):
-        acc += v
-    if n == 1:
-        return acc
-    return acc / n
 
 
 def paletteVOC(N=256, normalized=False, PIL=False):
@@ -55,6 +34,12 @@ def paletteVOC(N=256, normalized=False, PIL=False):
     if PIL:
         cmap = [k for l in cmap for k in l]
     return cmap
+
+
+def pil(array):
+    im = Image.fromarray(array)
+    im.putpalette(paletteVOC(PIL=True))
+    return im
 
 
 def pil_grid(images, max_horiz=np.iinfo(int).max, margin=0, background='white'):

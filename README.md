@@ -6,10 +6,9 @@ ESAT-PSI, KU Leuven, Belgium.
 
 To appear in CVPR 2018. See [project page](http://bmax.im/LovaszSoftmax) and [arxiv paper](https://arxiv.org/abs/1705.08790).
 
-## PyTorch implementation of the loss layer
+## PyTorch implementation of the loss layer (*pytorch* folder)
 **Files included:**
-* **lovasz_losses.py**: PyTorch implementation of the Lovász hinge and Lovász-Softmax for the Jaccard index
-* **utils.py**: Some Python utils
+* **lovasz_losses.py**: Standalone PyTorch implementation of the Lovász hinge and Lovász-Softmax for the Jaccard index
 * **demo_binary.ipynb**: Jupyter notebook showcasing binary training of a linear model
 * **demo_multiclass.ipynb**: Jupyter notebook showcasing multiclass training of a linear model
 
@@ -17,11 +16,9 @@ The binary `lovasz_hinge` expects real-valued scores (positive scores correspond
 
 The multiclass `lovasz_softmax` expect class probabilities (the maximum scoring category is predicted). First use a `Softmax` layer on the unnormalized scores.
 
-## TensorFlow implementation of the loss layer
+## TensorFlow implementation of the loss layer (*tensorflow* folder)
 **Files included:**
-* **lovasz_losses_tf.py**: TensorFlow implementation of the Lovász hinge and Lovász-Softmax for the Jaccard index
-* **utils.py**: Some Python utils
-* **tfutils.py**: Some TensorFlow utils
+* **lovasz_losses_tf.py**: Standalone TensorFlow implementation of the Lovász hinge and Lovász-Softmax for the Jaccard index
 * **demo_binary_tf.ipynb**: Jupyter notebook showcasing the application of the binary loss
 * **demo_multiclass_tf.ipynb**: Jupyter notebook showcasing the application of the multiclass loss
 
