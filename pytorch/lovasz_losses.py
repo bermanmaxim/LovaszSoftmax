@@ -92,7 +92,7 @@ def lovasz_hinge_flat(logits, labels):
     """
     Binary Lovasz hinge loss
       logits: [P] Variable, logits at each prediction (between -\infty and +\infty)
-      labels: [P] Tensor, binary ground truth labels (-1 or 1)
+      labels: [P] Tensor, binary ground truth labels (0 or 1)
       ignore: label to ignore
     """
     if len(labels) == 0:
