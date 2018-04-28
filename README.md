@@ -1,5 +1,4 @@
-# The Lovász-Softmax loss
-## A tractable surrogate for the optimization of the intersection-over-union measure in neural networks
+# The Lovász-Softmax loss: A tractable surrogate for the optimization of the intersection-over-union measure in neural networks
 
 <img src="https://cdn.rawgit.com/bermanmaxim/bermanmaxim.github.io/5edecd41/single_LSimage.jpg" height="180">
 
