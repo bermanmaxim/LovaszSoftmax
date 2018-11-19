@@ -38,7 +38,7 @@ See for example how the work [*Land Cover Classification From Satellite Imagery 
 
 * Inference in Tensorflow is very slow...
 
-Compiling from Tensorflow master (or using a future distribution that includes commit [tensorflow/tensorflow@73e3215](https://github.com/tensorflow/tensorflow/commit/73e3215c3a2edadbf9111cca44ab3d5ca146c327) should solve this problem; see [issue #6](https://github.com/bermanmaxim/LovaszSoftmax/issues/6).
+Compiling from Tensorflow master (or using a future distribution that includes commit [tensorflow/tensorflow@73e3215](https://github.com/tensorflow/tensorflow/commit/73e3215c3a2edadbf9111cca44ab3d5ca146c327)) should solve this problem; see [issue #6](https://github.com/bermanmaxim/LovaszSoftmax/issues/6).
 
 ## Citation
 Please cite
