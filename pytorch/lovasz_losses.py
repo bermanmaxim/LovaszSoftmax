@@ -12,7 +12,7 @@ import numpy as np
 try:
     from itertools import  ifilterfalse
 except ImportError: # py3k
-    from itertools import  filterfalse
+    from itertools import  filterfalse as ifilterfalse
 
 
 def lovasz_grad(gt_sorted):
