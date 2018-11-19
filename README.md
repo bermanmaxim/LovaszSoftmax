@@ -36,6 +36,10 @@ The loss can be optimized on its own, but the optimal optimization hyperparamete
 
 See for example how the work [*Land Cover Classification From Satellite Imagery With U-Net and Lovasz-Softmax Loss* by Alexander Rakhlin et al.](http://openaccess.thecvf.com/content_cvpr_2018_workshops/w4/html/Rakhlin_Land_Cover_Classification_CVPR_2018_paper.html) used our loss in the [CVPR 18 DeepGlobe challenge](http://deepglobe.org/).
 
+* Inference in Tensorflow is very slow...
+
+Compiling from Tensorflow master (or using a future distribution that includes commit [tensorflow/tensorflow@73e3215](https://github.com/tensorflow/tensorflow/commit/73e3215c3a2edadbf9111cca44ab3d5ca146c327) should solve this problem; see [issue #6](https://github.com/bermanmaxim/LovaszSoftmax/issues/6).
+
 ## Citation
 Please cite
 ```
