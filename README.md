@@ -43,11 +43,11 @@ Compiling from Tensorflow master (or using a future distribution that includes c
 ## Citation
 Please cite
 ```
-@InProceedings{Berman_2018_CVPR,
-author = {Berman, Maxim and Rannen Triki, Amal and Blaschko, Matthew B.},
-title = {The Lovász-Softmax Loss: A Tractable Surrogate for the Optimization of the Intersection-Over-Union Measure in Neural Networks},
-booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
-month = {June},
-year = {2018}
+@inproceedings{berman2018lovasz,
+  title={The Lov{\'a}sz-Softmax loss: A tractable surrogate for the optimization of the intersection-over-union measure in neural networks},
+  author={Berman, Maxim and Rannen Triki, Amal and Blaschko, Matthew B},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  pages={4413--4421},
+  year={2018}
 }
 ```
