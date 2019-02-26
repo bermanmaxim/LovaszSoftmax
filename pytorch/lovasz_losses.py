@@ -44,7 +44,7 @@ def iou_binary(preds, labels, EMPTY=1., ignore=None, per_image=True):
         if not union:
             iou = EMPTY
         else:
-            iou = float(intersection) / union
+            iou = float(intersection) / float(union)
         ious.append(iou)
     iou = mean(ious)    # mean accross images if per_image
     return 100 * iou
@@ -66,9 +66,9 @@ def iou(preds, labels, C, EMPTY=1., ignore=None, per_image=False):
                 if not union:
                     iou.append(EMPTY)
                 else:
-                    iou.append(float(intersection) / union)
+                    iou.append(float(intersection) / float(union))
         ious.append(iou)
-    ious = map(mean, zip(*ious)) # mean accross images if per_image
+    ious = [mean(iou) for iou in zip(*ious)] # mean accross images if per_image
     return 100 * np.array(ious)
 
 
@@ -179,7 +179,6 @@ def lovasz_softmax_flat(probas, labels, only_present=False):
         return probas * 0.
     C = probas.size(1)
     
-    C = probas.size(1)
     losses = []
     for c in range(C):
         fg = (labels == c).float() # foreground for class c
@@ -219,7 +218,7 @@ def isnan(x):
     return x != x
     
     
-def mean(l, ignore_nan=True, empty=0):
+def mean(l, ignore_nan=False, empty=0):
     """
     nanmean compatible with generators.
     """

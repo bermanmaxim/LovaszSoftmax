@@ -4,7 +4,6 @@ Maxim Berman 2018 ESAT-PSI KU Leuven (MIT License)
 """
 
 from __future__ import print_function, division
-from itertools import  ifilterfalse
 import numpy as np
 from PIL import Image, ImageDraw
 import contextlib
@@ -68,8 +67,9 @@ def dummy_triangles(w, categories=[0, 255, 1]):
     im.putpalette(paletteVOC(PIL=True))
     draw = ImageDraw.Draw(im)
     for c in categories[1:]:
-        draw.polygon(map(tuple, np.random.randint(w, size=(3, 2))), fill=c, outline=None)
+        draw.polygon([tuple(p) for p in np.random.randint(w, size=(3, 2))], fill=c, outline=None)
     return im
+
 
 # https://stackoverflow.com/questions/2891790/how-to-pretty-printing-a-numpy-array-without-scientific-notation-and-with-given
 @contextlib.contextmanager
