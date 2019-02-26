@@ -11,8 +11,8 @@ Published in CVPR 2018. See [project page](http://bmax.im/LovaszSoftmax), [arxiv
 ## PyTorch implementation of the loss layer (*pytorch* folder)
 **Files included:**
 * **lovasz_losses.py**: Standalone PyTorch implementation of the Lovász hinge and Lovász-Softmax for the Jaccard index
-* **demo_binary.ipynb**: Jupyter notebook showcasing binary training of a linear model
-* **demo_multiclass.ipynb**: Jupyter notebook showcasing multiclass training of a linear model
+* **demo_binary.ipynb**: Jupyter notebook showcasing binary training of a linear model, with the Lovász Hinge and with the Lovász-Sigmoid.
+* **demo_multiclass.ipynb**: Jupyter notebook showcasing multiclass training of a linear model with the Lovász-Softmax
 
 The binary `lovasz_hinge` expects real-valued scores (positive scores correspond to foreground pixels). 
 
@@ -21,8 +21,8 @@ The multiclass `lovasz_softmax` expect class probabilities (the maximum scoring 
 ## TensorFlow implementation of the loss layer (*tensorflow* folder)
 **Files included:**
 * **lovasz_losses_tf.py**: Standalone TensorFlow implementation of the Lovász hinge and Lovász-Softmax for the Jaccard index
-* **demo_binary_tf.ipynb**: Jupyter notebook showcasing the application of the binary loss
-* **demo_multiclass_tf.ipynb**: Jupyter notebook showcasing the application of the multiclass loss
+* **demo_binary_tf.ipynb**: Jupyter notebook showcasing binary training of a linear model, with the Lovász Hinge and with the Lovász-Sigmoid.
+* **demo_multiclass_tf.ipynb**: Jupyter notebook showcasing the application of the multiclass loss with the Lovász-Softmax
 
 *Warning: the losses values and gradients have been tested to be the same as in PyTorch (see notebooks), however we have not used the TF implementation in a training setting.*
 
