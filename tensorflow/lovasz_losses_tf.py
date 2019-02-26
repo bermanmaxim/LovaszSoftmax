@@ -92,10 +92,11 @@ def flatten_binary_scores(scores, labels, ignore=None):
 # --------------------------- MULTICLASS LOSSES ---------------------------
 
 
-def lovasz_softmax(probas, labels, classes='all', per_image=False, ignore=None, order='BHWC'):
+def lovasz_softmax(probas, labels, classes='present', per_image=False, ignore=None, order='BHWC'):
     """
     Multi-class Lovasz-Softmax loss
       probas: [B, H, W, C] or [B, C, H, W] Variable, class probabilities at each prediction (between 0 and 1)
+              Interpreted as binary (sigmoid) output with outputs of size [B, H, W].
       labels: [B, H, W] Tensor, ground truth labels (between 0 and C - 1)
       classes: 'all' for all, 'present' for classes present in labels, or a list of classes to average.
       per_image: compute the loss per image instead of per batch
@@ -115,7 +116,7 @@ def lovasz_softmax(probas, labels, classes='all', per_image=False, ignore=None, 
     return loss
 
 
-def lovasz_softmax_flat(probas, labels, classes='all'):
+def lovasz_softmax_flat(probas, labels, classes='present'):
     """
     Multi-class Lovasz-Softmax loss
       probas: [P, C] Variable, class probabilities at each prediction (between 0 and 1)
@@ -130,7 +131,13 @@ def lovasz_softmax_flat(probas, labels, classes='all'):
         fg = tf.cast(tf.equal(labels, c), probas.dtype)  # foreground for class c
         if classes == 'present':
             present.append(tf.reduce_sum(fg) > 0)
-        errors = tf.abs(fg - probas[:, c])
+        if C == 1:
+            if len(classes) > 1:
+                raise ValueError('Sigmoid output possible only with 1 class')
+            class_pred = probas[:, 0]
+        else:
+            class_pred = probas[:, c]
+        errors = tf.abs(fg - class_pred)
         errors_sorted, perm = tf.nn.top_k(errors, k=tf.shape(errors)[0], name="descending_sort_{}".format(c))
         fg_sorted = tf.gather(fg, perm)
         grad = lovasz_grad(fg_sorted)
@@ -151,6 +158,8 @@ def flatten_probas(probas, labels, ignore=None, order='BHWC'):
     """
     Flattens predictions in the batch
     """
+    if len(probas.shape) == 3:
+        probas, order = tf.expand_dims(probas, 3), 'BHWC'
     if order == 'BCHW':
         probas = tf.transpose(probas, (0, 2, 3, 1), name="BCHW_to_BHWC")
         order = 'BHWC'
